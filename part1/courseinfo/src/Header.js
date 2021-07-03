@@ -1,4 +1,4 @@
-export const Header = ({course}) => {
+const Header = ({course}) => {
     return <h1>{course}</h1>
 }
 

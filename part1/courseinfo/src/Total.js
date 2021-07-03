@@ -1,4 +1,4 @@
-export const Total = ({allExercises}) => {
+const Total = ({allExercises}) => {
     const reducer = (accumulator, currentValue) => accumulator + currentValue
     const sumOfExercises = allExercises.reduce(reducer)
 
