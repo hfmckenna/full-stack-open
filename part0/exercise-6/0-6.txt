@@ -1,0 +1,2 @@
+browser->server: HTTP POST application/json {content: "Hello", date: "2021-07-03T12:08:56.272Z"}
+server-->browser: HTTP Status 201 {"message":"note created"}
