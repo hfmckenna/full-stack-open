@@ -1,5 +1,14 @@
 import React, {useState} from 'react'
 
+const StatisticLine = ({text,score}) => {
+    return <p>{text} {score}</p>
+}
+
+const Button = ({text, score, setScore}) => {
+    const changeScore = () => setScore(score + 1);
+    return <button onClick={changeScore}>{text}</button>
+}
+
 const Statistics = ({good, neutral, bad, total}) => {
     const score = good - bad > 0 ? good - bad : 0;
     const average = score / total || 0;
@@ -9,12 +18,12 @@ const Statistics = ({good, neutral, bad, total}) => {
         <div>
             <h2>statistics</h2>
             {total ? <div>
-                <p>good {good}</p>
-                <p>neutral {neutral}</p>
-                <p>bad {bad}</p>
-                <p>all {total}</p>
-                <p>average {average}</p>
-                <p>positive {positive}</p>
+                <StatisticLine text="good" score={good}/>
+                <StatisticLine text="neutral" score={neutral}/>
+                <StatisticLine text="bad" score={bad}/>
+                <StatisticLine text="all" score={total}/>
+                <StatisticLine text="average" score={average}/>
+                <StatisticLine text="positive" score={positive}/>
             </div> : <p>No feedback given</p>}
         </div>
     )
@@ -26,19 +35,15 @@ const App = () => {
     const [neutral, setNeutral] = useState(0)
     const [bad, setBad] = useState(0)
 
-    const goodScore = () => setGood(good + 1);
-    const neutralScore = () => setNeutral(neutral + 1);
-    const badScore = () => setBad(bad + 1);
-
     const total = good + neutral + bad;
 
     return (
         <div>
             <h2>give feedback</h2>
             <div>
-                <button onClick={goodScore}>Good</button>
-                <button onClick={neutralScore}>Neutral</button>
-                <button onClick={badScore}>Bad</button>
+                <Button text="Good" score={good} setScore={setGood}/>
+                <Button text="Neutral" score={neutral} setScore={setNeutral}/>
+                <Button text="Bad" score={bad} setScore={setBad}/>
             </div>
             <Statistics good={good} neutral={neutral} bad={bad} total={total}/>
         </div>
