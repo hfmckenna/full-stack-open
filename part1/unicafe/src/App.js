@@ -1,7 +1,10 @@
 import React, {useState} from 'react'
 
-const StatisticLine = ({text,score}) => {
-    return <p>{text} {score}</p>
+const StatisticLine = ({text, score}) => {
+    return <tr>
+        <td>{text}</td>
+        <td>{score}</td>
+    </tr>
 }
 
 const Button = ({text, score, setScore}) => {
@@ -17,14 +20,16 @@ const Statistics = ({good, neutral, bad, total}) => {
     return (
         <div>
             <h2>statistics</h2>
-            {total ? <div>
+            {total ? <table>
+                <tbody>
                 <StatisticLine text="good" score={good}/>
                 <StatisticLine text="neutral" score={neutral}/>
                 <StatisticLine text="bad" score={bad}/>
                 <StatisticLine text="all" score={total}/>
                 <StatisticLine text="average" score={average}/>
                 <StatisticLine text="positive" score={positive}/>
-            </div> : <p>No feedback given</p>}
+                </tbody>
+            </table> : <p>No feedback given</p>}
         </div>
     )
 }
