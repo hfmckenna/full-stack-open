@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const PersonForm = ({persons, setPersons}) => {
+const PersonForm = ({persons, setPersons, createPerson, updatePerson}) => {
 
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
@@ -8,13 +8,21 @@ const PersonForm = ({persons, setPersons}) => {
     function addEntry(event) {
         event.preventDefault()
         if (typeof persons.find(person => person.name === newName) === "undefined" && newNumber && newName) {
-            setPersons(persons.concat({name: newName, number: newNumber}))
+            createPerson({name: newName, number: newNumber})
+                .then(response => setPersons(persons.concat(response.data)))
+                .catch(error => console.log(error))
         } else if (!newName) {
             alert(`Please enter a name`)
         } else if (!newNumber) {
             alert(`Please enter a phone number`)
-        } else {
-            alert(`${newName} is already added to phonebook`)
+        } else if (persons.find(person => person.name === newName)) {
+            const existingPerson = persons.find(person => person.name === newName)
+            const confirmation = window.confirm(`Do you want to update ${existingPerson.name} with new details?`)
+            if (confirmation) {
+                updatePerson(existingPerson.id, {name: newName, number: newNumber})
+                    .then(response => setPersons(persons.map(person => person.id !== existingPerson.id ? person : response.data)))
+                    .catch(error => console.log(error))
+            }
         }
     }
 
