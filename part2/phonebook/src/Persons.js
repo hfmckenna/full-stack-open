@@ -1,6 +1,6 @@
 import React from "react";
 
-const Persons = ({persons, filterText, setPersons, deletePerson}) => {
+const Persons = ({persons, filterText, setPersons, deletePerson, setErrorMessage}) => {
     function matchName(name) {
         const lowerCaseName = name.toLowerCase()
         const lowerCaseInput = filterText.toLowerCase()
@@ -12,7 +12,13 @@ const Persons = ({persons, filterText, setPersons, deletePerson}) => {
         if (confirmation) {
             deletePerson(id)
                 .then(response => setPersons(persons.filter(person => person.id !== id)))
-                .catch(error => console.log(error))
+                .catch(error => {
+                    console.log(error)
+                    setErrorMessage(`Information of ${name} has already been removed from server`)
+                    setTimeout(() => {
+                        setErrorMessage(null)
+                    }, 5000)
+                })
         }
     }
 

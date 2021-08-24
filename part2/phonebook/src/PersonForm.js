@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const PersonForm = ({persons, setPersons, createPerson, updatePerson}) => {
+const PersonForm = ({persons, setPersons, createPerson, updatePerson, setMessage}) => {
 
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
@@ -9,7 +9,13 @@ const PersonForm = ({persons, setPersons, createPerson, updatePerson}) => {
         event.preventDefault()
         if (typeof persons.find(person => person.name === newName) === "undefined" && newNumber && newName) {
             createPerson({name: newName, number: newNumber})
-                .then(response => setPersons(persons.concat(response.data)))
+                .then(response => {
+                    setPersons(persons.concat(response.data))
+                    setMessage(`Added ${response.data.name}`)
+                    setTimeout(() => {
+                        setMessage(null)
+                    }, 5000)
+                })
                 .catch(error => console.log(error))
         } else if (!newName) {
             alert(`Please enter a name`)
@@ -20,7 +26,13 @@ const PersonForm = ({persons, setPersons, createPerson, updatePerson}) => {
             const confirmation = window.confirm(`Do you want to update ${existingPerson.name} with new details?`)
             if (confirmation) {
                 updatePerson(existingPerson.id, {name: newName, number: newNumber})
-                    .then(response => setPersons(persons.map(person => person.id !== existingPerson.id ? person : response.data)))
+                    .then(response => {
+                        setPersons(persons.map(person => person.id !== existingPerson.id ? person : response.data))
+                        setMessage(`Updated ${response.data.name} with new number ${response.data.number}`)
+                        setTimeout(() => {
+                            setMessage(null)
+                        }, 5000)
+                    })
                     .catch(error => console.log(error))
             }
         }

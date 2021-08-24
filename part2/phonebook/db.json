@@ -1,19 +1,14 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
+      "name": "Hugh",
+      "number": "13613636136",
+      "id": 3
     },
     {
-      "name": "Ada Lovelace",
-      "number": "19358135891",
-      "id": 2
-    },
-    {
-      "name": "Trigger",
-      "number": "13515",
-      "id": 5
+      "name": "Manny",
+      "number": "246246246",
+      "id": 4
     }
   ]
 }
